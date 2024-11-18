@@ -137,16 +137,12 @@ jobs:
             ubuntu-advantage-tools \
             docker-* \
             fonts-* \
-            llvm-* \
+            llvm* \
             javascript-common \
             openjdk-11-jre-headless \
             linux-cloud-tools* \
             linux-azure-6.2-* \
             hicolor-icon-theme \
-            gcc-9 \
-            gcc-10 \
-            gcc-11 \
-            gcc-12 \
             cloud-initramfs* \
             x11-* \
             bind9-* \
@@ -171,8 +167,7 @@ jobs:
             tcl* \
             p7zip* \
             gfortran-13 \
-            gcc-12-* \
-            gcc-11-* \
+            gcc* \
             google-cloud-cli \
             heroku \
             snmp \
@@ -187,6 +182,14 @@ jobs:
           sudo dpkg -r packages-microsoft-prod　> /dev/null 2>&1 || true
           sudo apt-get autoremove -y > /dev/null 2>&1 || true
           sudo apt-get autoclean -y > /dev/null 2>&1 || true
+      - name: Install dependencies
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod u+x llvm.sh
+          sudo ./llvm.sh 18
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+          sudo apt update
+          sudo apt -y install gcc-15
       - name: Build kernel
         run: |
           df -lh
