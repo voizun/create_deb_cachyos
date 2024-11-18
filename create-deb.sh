@@ -5,7 +5,7 @@
 # Initialize variables to store user choices
 _cachyos_config="CACHYOS"
 _cpusched_selection="cachyos"
-_llvm_lto_selection="none"
+_llvm_lto_selection="thin"
 _tick_rate="500"
 _numa="enable"
 _hugepage="always"
@@ -14,7 +14,7 @@ _o3_optimization="yes"
 _performance_governor="no"
 _nr_cpus="320"
 _bbr3="yes"
-_march="native"
+_march="x86-64-v3"
 _preempt="preempt"
 _tick_type="nohz_full"
 
@@ -575,37 +575,39 @@ _kv_name=$(basename $_kv_name .tar.xz)
 # run the check_deps function and store the result in dep_status
 check_deps
 
-whiptail --title "CachyOS Kernel Configuration" --msgbox "This is a beta version of the CachyOS Kernel Configuration script. Use at your own risk." 8 78
+# whiptail --title "CachyOS Kernel Configuration" --msgbox "This is a beta version of the CachyOS Kernel Configuration script. Use at your own risk." 8 78
 
 # say that the user will lose the ability to use secure boot and ask for confirmation
-whiptail --title "Secure Boot Warning" --yesno "This script will disable secure boot. Do you want to continue?" 8 78
+# whiptail --title "Secure Boot Warning" --yesno "This script will disable secure boot. Do you want to continue?" 8 78
 
-init_script
+# init_script
 
 
 # Main menu
 while :; do
 
-    CHOICE=$(whiptail --title "Kernel Configuration Menu" --menu "Choose an option" 25 78 16 \
-        "0" "Choose Kernel Version ($_kv_name)" \
-        "1" "Configure CachyOS" \
-        "2" "Configure CPU Scheduler" \
-        "3" "Configure LLVM LTO" \
-        "4" "Configure Tick Rate" \
-        "5" "Configure NR_CPUS" \
-        "6" "Configure Tick Type" \
-        "7" "Configure Preempt Type" \
-        "8" "Configure LRU" \
-        "9" "Configure Hugepages" \
-        "10" "Configure System Optimizations" \
-        "11" "COMPILE KERNEL" \
-        "12" "Exit" 3>&1 1>&2 2>&3)
+#    CHOICE=$(whiptail --title "Kernel Configuration Menu" --menu "Choose an option" 25 78 16 \
+#        "0" "Choose Kernel Version ($_kv_name)" \
+#        "1" "Configure CachyOS" \
+#        "2" "Configure CPU Scheduler" \
+#        "3" "Configure LLVM LTO" \
+#        "4" "Configure Tick Rate" \
+#        "5" "Configure NR_CPUS" \
+#        "6" "Configure Tick Type" \
+#        "7" "Configure Preempt Type" \
+#        "8" "Configure LRU" \
+#        "9" "Configure Hugepages" \
+#        "10" "Configure System Optimizations" \
+#        "11" "COMPILE KERNEL" \
+#        "12" "Exit" 3>&1 1>&2 2>&3)
 
     exitstatus=$?
     if [ $exitstatus != 0 ]; then
         # Exit the script if the user presses Esc
         break
     fi
+
+    CHOICE=11
 
     case $CHOICE in
     0) choose_kernel_option ;;
