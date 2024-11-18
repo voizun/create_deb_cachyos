@@ -189,7 +189,7 @@ jobs:
           sudo ./llvm.sh 18
           sudo add-apt-repository ppa:ubuntu-toolchain-r/test
           sudo apt update
-          sudo apt -y install gcc-15
+          sudo apt -y install gcc-13
       - name: Build kernel
         run: |
           df -lh
