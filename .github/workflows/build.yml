@@ -1,0 +1,21 @@
+name: build
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build kernel
+        run: |
+          chmod 755 create-deb.sh
+          ./create-deb.sh
+      - name: Release
+        run: |
+          _kv_url=$(curl -s https://www.kernel.org | grep -A 1 'id="latest_link"' | awk 'NR==2' | grep -oP 'href="\K[^"]+')
+          _kv_name=$(echo $_kv_url | grep -oP 'linux-\K[^"]+')
+          _kv_name=$(basename $_kv_name .tar.xz)
+          gh release create $_kv_name ./linux-$_kv_name/custom-kernel-*/*.deb
