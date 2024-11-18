@@ -376,7 +376,7 @@ EOF
 
 
     # Compile the kernel and modules
-    @make -j$(nproc)
+    make -j$(nproc)
     mkdir -p /tmp/kernel-modules
     make modules_install INSTALL_MOD_PATH=/tmp/kernel-modules
 
@@ -390,7 +390,7 @@ EOF
             --libdir=/usr/lib --datadir=/usr/share --includedir=/usr/include \
             --with-udevdir=/lib/udev --libexecdir=/usr/lib/zfs --with-config=kernel \
             --with-linux=$(LINUX_DIR)
-        @make -j$(nproc)
+        make -j$(nproc)
         cd $LINUX_DIR
     fi
 
