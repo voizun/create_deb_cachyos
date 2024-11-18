@@ -11,8 +11,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Build kernel
         run: |
+          df -lh
           chmod 755 create-deb.sh
-          ./create-deb.sh
+          sudo mkdir /mnt/tmp
+          sudo chown runner /mnt/tmp
+          ./create-deb.sh O=/mnt/tmp
       - name: Release
         run: |
           _kv_url=$(curl -s https://www.kernel.org | grep -A 1 'id="latest_link"' | awk 'NR==2' | grep -oP 'href="\K[^"]+')
